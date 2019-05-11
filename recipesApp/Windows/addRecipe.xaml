@@ -1,0 +1,65 @@
+﻿<Window x:Class="recipesApp.addRecipe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:recipesApp"
+        mc:Ignorable="d"
+        Title="addRecipe" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="datagrid" x:Uid="datagrid1" SelectionMode="Single" Margin="33,153,476,33" ItemsSource="{Binding}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="ID" x:Name="id" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding ingredient}" Header="Name" x:Name="name" Width="Auto"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Add to Recipe">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Add" Click="AddIR_Click" CommandParameter="{Binding id}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Edit">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Content="edit" Click="Edit_Click" CommandParameter="{Binding id}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="delete">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Content="Delete" Click="Delete_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Add new Recipe" HorizontalAlignment="Left" Margin="376,18,0,0" VerticalAlignment="Top"/>
+        <Grid Name="recipes" HorizontalAlignment="Left" Height="351" Margin="28,36,0,0" VerticalAlignment="Top" Width="288">
+            <Label Content="search" HorizontalAlignment="Left" Margin="2,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.064,0.661"/>
+            <TextBox Name="addI" HorizontalAlignment="Left" Height="23" Margin="51,51,0,0" TextWrapping="Wrap" Text="Add Ingredent" VerticalAlignment="Top" Width="120"/>
+            <Button Name="AddOrEdit" Content="Add ingredient" HorizontalAlignment="Left" Margin="179,79,0,0" VerticalAlignment="Top" Width="109" Click=" AddI_Click"/>
+            <TextBox Name="search" HorizontalAlignment="Left" Height="23" Margin="51,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="search_textchanged"/>
+            <TextBox  Name="TxtAmount" HorizontalAlignment="Left" Height="23" Margin="51,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Amount" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top"/>
+            <Label Content="Select ingredients" HorizontalAlignment="Left" Margin="10,-3,0,0" VerticalAlignment="Top" Width="109"/>
+        </Grid>
+        <Grid Name="Recipe" HorizontalAlignment="Left" Height="374" Margin="376,36,0,0" VerticalAlignment="Top" Width="387">
+            <TextBox Name="txtRName" HorizontalAlignment="Left" Height="23" Margin="89,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Name" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="Prep_Time" HorizontalAlignment="Left" Height="23" Margin="89,49,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="prep_Time" HorizontalAlignment="Left" Margin="15,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.204,0.403"/>
+            <TextBox Name="Num_Serves" HorizontalAlignment="Left" Height="23" Margin="89,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Number of Serves" HorizontalAlignment="Left" Margin="-30,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.204,0.403"/>
+            <Button Content="Add Recipes" HorizontalAlignment="Left" Margin="302,352,0,0" VerticalAlignment="Top" Width="75" Click="AddRecipes" RenderTransformOrigin="0.481,5.454"/>
+            <RichTextBox Name="Method" HorizontalAlignment="Left" Height="209" Margin="89,138,0,0" VerticalAlignment="Top" Width="288">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text=""/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <Label Content="Method" HorizontalAlignment="Left" Margin="23,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.532,0.908"/>
+        </Grid>
+    </Grid>
+</Window>

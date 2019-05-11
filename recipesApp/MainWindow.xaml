@@ -1,0 +1,45 @@
+﻿<Window x:Class="recipesApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:recipesApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="603.723">
+    <Grid Margin="0,0,2,8">
+        <DataGrid x:Name="datagrid" x:Uid="datagrid1" SelectionMode="Single" Margin="33,102,32,33" ItemsSource="{Binding}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding id}" Header="ID" x:Name="id" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding detail}" Header="Name" x:Name="name" Width="Auto"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding preparation_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding num_serves}" Header="num of serves" x:Name="num_serve" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Add favourites">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Add" Click="AddF_Click" CommandParameter="{Binding id}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Edit">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Content="View" Click="View_Click" CommandParameter="{Binding id}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="delete">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Content="Delete" Click="Delete_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="AddR" Content="Add Recipes" HorizontalAlignment="Left" Margin="33,32,0,0" VerticalAlignment="Top" Width="75" Click="AddR_Click"/>
+        <Button x:Name="Favourite" Content="Favourite" HorizontalAlignment="Left" Margin="487,40,0,0" VerticalAlignment="Top" Width="75" Click="Favourite_Click"/>
+        <TextBox x:Name="Search" HorizontalAlignment="Left" Height="23" Margin="198,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="search_textchanged"/>
+        <Label Content="Search:" HorizontalAlignment="Left" Margin="155,30,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
