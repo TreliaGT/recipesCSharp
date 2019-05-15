@@ -73,7 +73,7 @@ namespace recipesApp
         /// <param name="e"></param>
         private void Favourite_Click(object sender, RoutedEventArgs e)
         {
-
+            //Favourites Window
         }
 
         /// <summary>
