@@ -61,8 +61,9 @@ namespace recipesApp
         /// <param name="e"></param>
         private void AddR_Click(object sender, RoutedEventArgs e)
         {
-            addRecipe r = new addRecipe();
+            Close r = new Close();
             r.Show();
+            this.Close();
         }
 
         /// <summary>
@@ -103,6 +104,10 @@ namespace recipesApp
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        internal class Show
+        {
         }
     }
 }
