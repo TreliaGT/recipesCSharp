@@ -82,6 +82,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>recipesDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Windows\FavouritesWindow.xaml.cs">
+      <DependentUpon>FavouritesWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\addRecipe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +101,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\FavouritesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

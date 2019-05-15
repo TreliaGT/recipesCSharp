@@ -1,4 +1,5 @@
-﻿using System;
+﻿using recipesApp.Windows;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
@@ -73,7 +74,9 @@ namespace recipesApp
         /// <param name="e"></param>
         private void Favourite_Click(object sender, RoutedEventArgs e)
         {
-            //Favourites Window
+            FavouritesWindow f = new FavouritesWindow();
+             f.Show();
+            this.Close();
         }
 
         /// <summary>
