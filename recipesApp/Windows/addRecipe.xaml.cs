@@ -187,7 +187,6 @@ namespace recipesApp
         // Adding to recipe section
         public string Rname;
         ArrayList ingredentslist = new ArrayList();
-        ArrayList Amount = new ArrayList();
         /// <summary>
         /// add recipe to favourites
         /// </summary>
@@ -197,8 +196,9 @@ namespace recipesApp
         {
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
+            string ingredient = ID + ',' + TxtAmount.Text;
             ingredentslist.Add(ID);
-            Amount.Add(TxtAmount);
+     
 
         }
 
@@ -246,12 +246,10 @@ namespace recipesApp
             string sql = null;
             foreach (object item in ingredentslist) // Loop through List with foreach
             {
-                foreach (object amount in Amount) // Loop through List with foreach
-                {
                     cnn = new SqlConnection(conn.getConnectionString());
 
 
-                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(SELECT id FROM recipes WHERE detail =" + Rname + "," + item + ",'" + amount + ')';
+                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(SELECT id FROM recipes WHERE detail =" + Rname + "," + item + ')';
 
                     try
                     {
@@ -268,4 +266,3 @@ namespace recipesApp
             }
         }
     }
-}
