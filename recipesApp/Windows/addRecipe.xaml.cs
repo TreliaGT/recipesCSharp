@@ -84,7 +84,7 @@ namespace recipesApp
         {
             try
             {
-                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM ingredents WHERE ingredent LIKE '%" + search.Text + "%'", conn.getConnectionString());
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM ingredients WHERE ingredient LIKE '%" + search.Text + "%'", conn.getConnectionString());
                 DataSet ds = new DataSet();
                 da.Fill(ds, "ingredents");
                 datagrid.ItemsSource = ds.Tables["ingredents"].DefaultView;
@@ -185,7 +185,9 @@ namespace recipesApp
 
 
         // Adding to recipe section
+        public string Rname;
         ArrayList ingredentslist = new ArrayList();
+        ArrayList Amount = new ArrayList();
         /// <summary>
         /// add recipe to favourites
         /// </summary>
@@ -196,11 +198,74 @@ namespace recipesApp
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
             ingredentslist.Add(ID);
+            Amount.Add(TxtAmount);
+
         }
 
         private void AddRecipes(object sender, RoutedEventArgs e)
         {
-            
+            AddRecipesMethod();
+        }
+
+        private void AddRecipesMethod()
+        {
+            SqlConnection cnn;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
+
+            cnn = new SqlConnection(conn.getConnectionString());
+             Rname = txtRName.Text;
+            string method = ConvertRichTextBoxContentsToString(Method);
+
+            sql = "insert into recipes (detail, preparation_time, method, num_serves) values('" + Rname + "'," + Prep_Time.Text + ",'" + method + "'," + Num_Serves.Text + ')';
+
+            try
+            {
+                cnn.Open();
+                adapter.InsertCommand = new SqlCommand(sql, cnn);
+                adapter.InsertCommand.ExecuteNonQuery();
+                MessageBox.Show("Recipe added");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            addToJoinTable();
+        }
+
+        string ConvertRichTextBoxContentsToString(RichTextBox rtb)
+        {
+            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            return textRange.Text;
+        }
+
+        public void addToJoinTable()
+        {
+            SqlConnection cnn;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
+            foreach (object item in ingredentslist) // Loop through List with foreach
+            {
+                foreach (object amount in Amount) // Loop through List with foreach
+                {
+                    cnn = new SqlConnection(conn.getConnectionString());
+
+
+                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(SELECT id FROM recipes WHERE detail =" + Rname + "," + item + ",'" + amount + ')';
+
+                    try
+                    {
+                        cnn.Open();
+                        adapter.InsertCommand = new SqlCommand(sql, cnn);
+                        adapter.InsertCommand.ExecuteNonQuery();
+                        MessageBox.Show("Recipe added");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+            }
         }
     }
 }
