@@ -11,7 +11,7 @@ namespace recipesApp
     public partial class MainWindow : Window
     {
         DBConnection conn = new DBConnection();
-
+        string ID; //get ingredient Id
         public MainWindow()
         {
             InitializeComponent();
@@ -103,11 +103,30 @@ namespace recipesApp
         /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
+            SqlConnection cnn;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
 
-        }
+            DataRowView drv = (DataRowView)datagrid.SelectedItem;
+            ID = drv["id"].ToString();
 
-        internal class Show
-        {
+            cnn = new SqlConnection(conn.getConnectionString());
+
+
+            sql = "DELETE recipes WHERE id =" + ID;
+
+            try
+            {
+                cnn.Open();
+                adapter.InsertCommand = new SqlCommand(sql, cnn);
+                adapter.InsertCommand.ExecuteNonQuery();
+                MessageBox.Show("Row Deleted !! ");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            connection();
         }
     }
 }
