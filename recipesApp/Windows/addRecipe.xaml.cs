@@ -186,10 +186,8 @@ namespace recipesApp
         {
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
-            string ingredient = ID + ',' + TxtAmount.Text;
+            string ingredient = ID + ',"' + TxtAmount.Text + '"';
             ingredentslist.Add(ID);
-     
-
         }
 
         private void AddRecipes(object sender, RoutedEventArgs e)
@@ -239,7 +237,7 @@ namespace recipesApp
                     cnn = new SqlConnection(conn.getConnectionString());
 
 
-                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(SELECT id FROM recipes WHERE detail =" + Rname + "," + item + ')';
+                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(SELECT id FROM recipes WHERE detail ='" + Rname + "'," + item + ")";
 
                     try
                     {
