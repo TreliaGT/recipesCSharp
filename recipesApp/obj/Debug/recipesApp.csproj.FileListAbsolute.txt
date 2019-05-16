@@ -20,3 +20,5 @@ C:\Users\Trelia\source\repos\recipesApp\recipesApp\bin\Debug\MySql.Data.xml
 C:\Users\Trelia\source\repos\recipesApp\recipesApp\obj\Debug\recipesApp.csproj.CopyComplete
 C:\Users\Trelia\source\repos\recipesApp\recipesApp\obj\Debug\Windows\addRecipe.g.cs
 C:\Users\Trelia\source\repos\recipesApp\recipesApp\obj\Debug\Windows\addRecipe.baml
+C:\Users\Trelia\source\repos\recipesApp\recipesApp\obj\Debug\Windows\FavouritesWindow.g.cs
+C:\Users\Trelia\source\repos\recipesApp\recipesApp\obj\Debug\Windows\FavouritesWindow.baml
