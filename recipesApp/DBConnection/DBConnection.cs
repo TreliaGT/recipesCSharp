@@ -9,8 +9,9 @@ namespace recipesApp
     {
         public string getConnectionString()
         {
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=recipes;Integrated Security=True";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\V244682\Documents\recipes\recipesCSharp\recipesApp\recipesDB.mdf;Integrated Security=True";
             return connectionString;
-        }
+        }
+
     }
 }
