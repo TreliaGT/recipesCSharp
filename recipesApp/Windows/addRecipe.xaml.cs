@@ -175,7 +175,7 @@ namespace recipesApp
 
 
         // Adding to recipe section
-        public string Rname;
+        public string recipeName;
         ArrayList ingredentslist = new ArrayList();
         /// <summary>
         /// add recipe to favourites
@@ -186,7 +186,7 @@ namespace recipesApp
         {
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
-            string ingredient = ID + ",'" + TxtAmount.Text + "'";
+            string ingredient = ID + ", " + TxtAmount.Text;
             ingredentslist.Add(ingredient);
         }
 
@@ -202,10 +202,10 @@ namespace recipesApp
             string sql = null;
 
             cnn = new SqlConnection(conn.getConnectionString());
-             Rname = txtRName.Text;
+            recipeName = txtRName.Text.ToString();
             string method = ConvertRichTextBoxContentsToString(Method);
 
-            sql = "insert into recipes (detail, preparation_time, method, num_serves) values('" + Rname + "'," + Prep_Time.Text + ",'" + method + "'," + Num_Serves.Text + ')';
+            sql = "insert into recipes (detail, preparation_time, method, num_serves) values(" + recipeName + ", " + Prep_Time.Text.ToString() + ", " + method + ", " + Num_Serves.Text.ToString() + ")";
 
             try
             {
@@ -227,11 +227,12 @@ namespace recipesApp
             return textRange.Text;
         }
 
+        int ids;
         public void getid()
         {
             SqlConnection cnn;
             cnn = new SqlConnection(conn.getConnectionString());
-            using (SqlCommand command = new SqlCommand("SELECT id FROM recipes WHERE detail = " + Rname))
+            using (SqlCommand command = new SqlCommand("SELECT id FROM recipes WHERE detail like " + recipeName))
             {
 
                 command.Connection = cnn;
@@ -239,7 +240,7 @@ namespace recipesApp
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                  int id = reader.GetInt32(0);
+                  ids = reader.GetInt32(0);
                 }
               
             };
@@ -253,14 +254,15 @@ namespace recipesApp
             string sql = null;
 
 
-            foreach (object item in ingredentslist) // Loop through List with foreach
+            foreach (string item in ingredentslist) // Loop through List with foreach
             {
                     cnn = new SqlConnection(conn.getConnectionString());
 
 
-                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(" + id + "," + item + ")";
+                sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values("+ ids + ", " + item + ")";
+  //            sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(" + id + "," + item + ")";
 
-                    try
+                try
                     {
                         cnn.Open();
                         adapter.InsertCommand = new SqlCommand(sql, cnn);
