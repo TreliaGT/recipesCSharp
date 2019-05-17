@@ -187,7 +187,7 @@ namespace recipesApp
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
             string ingredient = ID + ",'" + TxtAmount.Text + "'";
-            ingredentslist.Add(ID);
+            ingredentslist.Add(ingredient);
         }
 
         private void AddRecipes(object sender, RoutedEventArgs e)
@@ -218,7 +218,7 @@ namespace recipesApp
             {
                 MessageBox.Show(ex.ToString());
             }
-            addToJoinTable();
+            getid();
         }
 
         string ConvertRichTextBoxContentsToString(RichTextBox rtb)
@@ -227,17 +227,38 @@ namespace recipesApp
             return textRange.Text;
         }
 
+        public void getid()
+        {
+            SqlConnection cnn;
+            cnn = new SqlConnection(conn.getConnectionString());
+            using (SqlCommand command = new SqlCommand("SELECT id FROM recipes WHERE detail = " + Rname))
+            {
+
+                command.Connection = cnn;
+                cnn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                  int id = reader.GetInt32(0);
+                }
+              
+            };
+            addToJoinTable();
+        }
+
         public void addToJoinTable()
         {
             SqlConnection cnn;
             SqlDataAdapter adapter = new SqlDataAdapter();
             string sql = null;
+
+
             foreach (object item in ingredentslist) // Loop through List with foreach
             {
                     cnn = new SqlConnection(conn.getConnectionString());
 
 
-                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(SELECT id FROM recipes WHERE detail ='" + Rname + "'," + item + ")";
+                    sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(" + id + "," + item + ")";
 
                     try
                     {
