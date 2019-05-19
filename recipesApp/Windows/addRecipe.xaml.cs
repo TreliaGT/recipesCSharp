@@ -186,7 +186,7 @@ namespace recipesApp
         {
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
-            string ingredient = ID + ", " + TxtAmount.Text;
+            string ingredient = ID + ", " + TxtAmount.Text.ToString();
             ingredentslist.Add(ingredient);
         }
 

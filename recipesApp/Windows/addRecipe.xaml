@@ -37,11 +37,11 @@
         <Label Content="Add new Recipe" HorizontalAlignment="Left" Margin="376,18,0,0" VerticalAlignment="Top"/>
         <Grid Name="recipes" HorizontalAlignment="Left" Height="351" Margin="28,36,0,0" VerticalAlignment="Top" Width="288">
             <Label Content="search" HorizontalAlignment="Left" Margin="2,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.064,0.661"/>
-            <TextBox Name="addI" HorizontalAlignment="Left" Height="23" Margin="51,51,0,0" TextWrapping="Wrap" Text="Add Ingredent" VerticalAlignment="Top" Width="120"/>
-            <Button Name="AddOrEdit" Content="Add ingredient" HorizontalAlignment="Left" Margin="179,79,0,0" VerticalAlignment="Top" Width="109" Click=" AddI_Click"/>
+            <TextBox Name="addI" HorizontalAlignment="Left" Height="23" Margin="51,21,0,0" TextWrapping="Wrap" Text="Add Ingredent" VerticalAlignment="Top" Width="120"/>
+            <Button Name="AddOrEdit" Content="Add ingredient" HorizontalAlignment="Left" Margin="179,22,0,0" VerticalAlignment="Top" Width="109" Click=" AddI_Click"/>
             <TextBox Name="search" HorizontalAlignment="Left" Height="23" Margin="51,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="search_textchanged"/>
-            <TextBox  Name="TxtAmount" HorizontalAlignment="Left" Height="23" Margin="51,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Amount" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top"/>
+            <TextBox  Name="TxtAmount" HorizontalAlignment="Left" Height="23" Margin="51,49,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Add Amount" HorizontalAlignment="Left" Margin="-27,49,0,0" VerticalAlignment="Top"/>
             <Label Content="Select ingredients" HorizontalAlignment="Left" Margin="10,-3,0,0" VerticalAlignment="Top" Width="109"/>
         </Grid>
         <Grid Name="Recipe" HorizontalAlignment="Left" Height="374" Margin="376,36,0,0" VerticalAlignment="Top" Width="387">
