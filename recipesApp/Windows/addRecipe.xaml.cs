@@ -47,22 +47,28 @@ namespace recipesApp
             string sql = null;
 
             cnn = new SqlConnection(conn.getConnectionString());
-           
-
-            sql = "insert into ingredients (ingredient) values('"+ addI.Text + "')";
-
-            try
+            if (addI.Text == "Add Ingredent")
             {
-                cnn.Open();
-                adapter.InsertCommand = new SqlCommand(sql, cnn);
-                adapter.InsertCommand.ExecuteNonQuery();
-                MessageBox.Show("Row inserted !! ");
+                MessageBox.Show("Please input a name for the ingredient");
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.ToString());
+
+                sql = "insert into ingredients (ingredient) values('" + addI.Text + "')";
+
+                try
+                {
+                    cnn.Open();
+                    adapter.InsertCommand = new SqlCommand(sql, cnn);
+                    adapter.InsertCommand.ExecuteNonQuery();
+                    MessageBox.Show("Row inserted !! ");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                Connection();
             }
-            Connection();
         }
 
         /// <summary>
@@ -157,7 +163,7 @@ namespace recipesApp
             cnn = new SqlConnection(conn.getConnectionString());
 
 
-            sql = "DELETE ingredients WHERE id =" + ID;
+            sql = "DELETE ingredients WHERE id =" + ID + "; DELETE recipes_ingredents WHERE ingredent_id = " + ID + " ;";
 
             try
             {
@@ -184,10 +190,20 @@ namespace recipesApp
         /// <param name="e"></param>
         private void AddIR_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView drv = (DataRowView)datagrid.SelectedItem;
-            ID = drv["id"].ToString();
-            string ingredient = ID + ", " + TxtAmount.Text.ToString();
-            ingredentslist.Add(ingredient);
+            if (TxtAmount.Text == "")
+            {
+                MessageBox.Show("please add an amount in the textbox next to add amount");
+            }else if (TxtAmount.Text == null)
+            {
+                MessageBox.Show("please add an amount in the textbox next to add amount");
+            }
+            else
+            {
+                DataRowView drv = (DataRowView)datagrid.SelectedItem;
+                ID = drv["id"].ToString();
+                string ingredient = ID + ", '" + TxtAmount.Text.ToString() + "'";
+                ingredentslist.Add(ingredient);
+            }
         }
 
         private void AddRecipes(object sender, RoutedEventArgs e)
@@ -205,7 +221,7 @@ namespace recipesApp
             recipeName = txtRName.Text.ToString();
             string method = ConvertRichTextBoxContentsToString(Method);
 
-            sql = "insert into recipes (detail, preparation_time, method, num_serves) values(" + recipeName + ", " + Prep_Time.Text.ToString() + ", " + method + ", " + Num_Serves.Text.ToString() + ")";
+            sql = "insert into recipes (detail, preparation_time, method, num_serves) values('" + recipeName + "', " + Prep_Time.Text + ", '" + method + "', " + Num_Serves.Text + ")";
 
             try
             {
@@ -232,7 +248,7 @@ namespace recipesApp
         {
             SqlConnection cnn;
             cnn = new SqlConnection(conn.getConnectionString());
-            using (SqlCommand command = new SqlCommand("SELECT id FROM recipes WHERE detail like " + recipeName))
+            using (SqlCommand command = new SqlCommand("SELECT id FROM recipes WHERE detail like '" + recipeName + "'"))
             {
 
                 command.Connection = cnn;
