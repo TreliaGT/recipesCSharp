@@ -283,7 +283,7 @@ namespace recipesApp
                         cnn.Open();
                         adapter.InsertCommand = new SqlCommand(sql, cnn);
                         adapter.InsertCommand.ExecuteNonQuery();
-                        MessageBox.Show("Recipe added");
+                      
                     }
                     catch (Exception ex)
                     {

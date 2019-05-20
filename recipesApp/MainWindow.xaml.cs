@@ -112,7 +112,7 @@ namespace recipesApp
         /// <param name="e"></param>
         private void View_Click(object sender, RoutedEventArgs e)
         {
-            findDetails();
+           
             ViewTxtName.IsReadOnly = true;
             ViewTxtNumServes.IsReadOnly = true;
             ViewTxtPrepTime.IsReadOnly = true;
@@ -120,6 +120,9 @@ namespace recipesApp
             Main.Visibility = Visibility.Hidden;
             View.Visibility = Visibility.Visible;
             btnEdit.Visibility = Visibility.Hidden;
+            btnAddI.Visibility = Visibility.Hidden;
+            Ingredientslist.IsReadOnly = true;
+            findDetails();
         }
 
         /// <summary>
@@ -130,7 +133,7 @@ namespace recipesApp
             try
              {
                  //   SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM recipes_ingredents WHERE recipe_id = " + ID + " INNER JOIN ingredients ON recipes_ingredents.ingredent_id = ingredients.ingredient ", conn.getConnectionString());
-                 SqlDataAdapter da = new SqlDataAdapter("SELECT recipes_ingredents.recipe_id, recipes_ingredents.ingredent_id, recipes_ingredents.Amount, ingredients.ingredient,  ingredients.Id FROM recipes_ingredents, ingredients Where  ingredients.Id = recipes_ingredents.ingredent_id AND recipe_id = " + ID, conn.getConnectionString());
+                 SqlDataAdapter da = new SqlDataAdapter("SELECT recipes_ingredents.Id, recipes_ingredents.recipe_id, recipes_ingredents.ingredent_id, recipes_ingredents.Amount, ingredients.ingredient,  ingredients.Id FROM recipes_ingredents, ingredients Where  ingredients.Id = recipes_ingredents.ingredent_id AND recipe_id = " + ID, conn.getConnectionString());
                  DataSet ds = new DataSet();
           
                  da.Fill(ds, "recipes_ingredents");
@@ -167,6 +170,8 @@ namespace recipesApp
             Main.Visibility = Visibility.Hidden;
             View.Visibility = Visibility.Visible;
             btnEdit.Visibility = Visibility.Visible;
+            btnAddI.Visibility = Visibility.Visible;
+            Ingredientslist.IsReadOnly = false;
             ViewTxtName.IsReadOnly = false;
             ViewTxtNumServes.IsReadOnly = false;
             ViewTxtPrepTime.IsReadOnly = false;
@@ -185,6 +190,18 @@ namespace recipesApp
 
         }
 
+        /// <summary>
+        /// add Ingredients
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddI_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
+        }
+
 
         /// <summary>
         /// Delete Ingredient
@@ -193,7 +210,39 @@ namespace recipesApp
         /// <param name="e"></param>
         private void DeleteI_Click(object sender, RoutedEventArgs e)
         {
-       
+            if (Ingredientslist.IsReadOnly == false)
+            {
+
+
+                SqlConnection cnn;
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                string sql = null;
+                string IDs;
+                DataRowView drv = (DataRowView)Ingredientslist.SelectedItem;
+                IDs = drv["Id"].ToString();
+
+                cnn = new SqlConnection(conn.getConnectionString());
+
+
+                sql = "DELETE recipes_ingredents WHERE Id = " + IDs;
+
+                try
+                {
+                    cnn.Open();
+                    adapter.InsertCommand = new SqlCommand(sql, cnn);
+                    adapter.InsertCommand.ExecuteNonQuery();
+                    MessageBox.Show("Row Deleted ");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                getIngredients();
+            }
+            else
+            {
+                MessageBox.Show("Must go back and press edit to be able to delete these");
+            }
         }
 
         string ConvertRichTextBoxContentsToString(RichTextBox rtb)
