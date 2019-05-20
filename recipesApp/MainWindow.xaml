@@ -7,39 +7,81 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="603.723">
     <Grid Margin="0,0,2,8">
-        <DataGrid x:Name="datagrid" x:Uid="datagrid1" SelectionMode="Single" Margin="33,102,32,33" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        <Grid Name="Main">
+            <DataGrid x:Name="datagrid" x:Uid="datagrid" SelectionMode="Single" Margin="33,102,32,33" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding id}" Header="ID" x:Name="id" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding detail}" Header="Name" x:Name="name" Width="Auto"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding preparation_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding num_serves}" Header="num of serves" x:Name="num_serve" IsReadOnly="True" Width="Auto"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding id}" Header="ID" x:Name="id1" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding detail}" Header="Name" x:Name="name" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding preparation_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding num_serves}" Header="num of serves" x:Name="num_serve" IsReadOnly="True" Width="Auto"/>
                 <DataGridTemplateColumn Header="Add favourites">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Add" Click="AddF_Click" CommandParameter="{Binding id}"></Button>
+                            <Button Content="Add" Click="AddF_Click" CommandParameter="{Binding id}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Details">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Content="View" Click="View_Click" CommandParameter="{Binding id}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Edit">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <Button Content="View" Click="View_Click" CommandParameter="{Binding id}"></Button>
+                            <Button Content="Edit" Click="EditView_Click" CommandParameter="{Binding id}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="delete">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <Button Content="Delete" Click="Delete_Click"></Button>
+                            <Button Content="Delete" Click="Delete_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddR" Content="Add Recipes" HorizontalAlignment="Left" Margin="33,32,0,0" VerticalAlignment="Top" Width="75" Click="AddR_Click"/>
+        <Button x:Name="AddR1" Content="Add Recipes" HorizontalAlignment="Left" Margin="33,32,0,0" VerticalAlignment="Top" Width="75" Click="AddR_Click"/>
         <Button x:Name="Favourite" Content="Favourite" HorizontalAlignment="Left" Margin="487,40,0,0" VerticalAlignment="Top" Width="75" Click="Favourite_Click"/>
         <TextBox x:Name="Search" HorizontalAlignment="Left" Height="23" Margin="198,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="search_textchanged"/>
         <Label Content="Search:" HorizontalAlignment="Left" Margin="155,30,0,0" VerticalAlignment="Top"/>
-
+        <Grid HorizontalAlignment="Left" Height="100" Margin="33,27,0,0" VerticalAlignment="Top" Width="100"/>
+        <Grid HorizontalAlignment="Left" Height="100" Margin="133,171,0,0" VerticalAlignment="Top" Width="100"/>
+        </Grid>
+        <Grid Name="View" Margin="10,-4,-10,4">
+            <TextBox Name="ViewTxtName" HorizontalAlignment="Left" Height="23" Margin="93,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="ViewTxtPrepTime" HorizontalAlignment="Left" Height="23" Margin="93,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="ViewTxtNumServes" HorizontalAlignment="Left" Height="23" Margin="93,126,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <RichTextBox Name="ViewTxtMethod" HorizontalAlignment="Left" Height="206" Margin="93,180,0,0" VerticalAlignment="Top" Width="237">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text=""/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <Label Content="Name" HorizontalAlignment="Left" Margin="20,48,0,0" VerticalAlignment="Top"/>
+            <Label Content="Prep Time" HorizontalAlignment="Left" Margin="20,84,0,0" VerticalAlignment="Top"/>
+            <Label Content="Number Of Serve" HorizontalAlignment="Left" Margin="-19,126,0,0" VerticalAlignment="Top"/>
+            <Label Content="Method" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.431,3.133"/>
+            <DataGrid x:Name="Ingredientslist" x:Uid="datagrid" SelectionMode="Single" Margin="345,53,22,206" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding ingredient}" Header="Ingredient" x:Name="Ingredient" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Amount}" Header="Amount" x:Name="Amount" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTemplateColumn Header="delete">
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Delete" Click="DeleteI_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Content="Ingredients" HorizontalAlignment="Left" Margin="275,53,0,0" VerticalAlignment="Top"/>
+            <Button Content="Close" HorizontalAlignment="Left" Margin="493,370,0,0" VerticalAlignment="Top" Width="75" Click="CloseView_Click"/>
+            <Button Content="Edit" HorizontalAlignment="Left" Margin="398,370,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Click" Name="btnEdit"/>
+        </Grid>
     </Grid>
 </Window>

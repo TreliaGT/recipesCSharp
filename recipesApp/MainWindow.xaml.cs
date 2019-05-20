@@ -3,6 +3,8 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace recipesApp
 {
@@ -16,6 +18,7 @@ namespace recipesApp
         public MainWindow()
         {
             InitializeComponent();
+            View.Visibility = Visibility.Hidden;
             connection();
         }
         /// <summary>
@@ -90,13 +93,113 @@ namespace recipesApp
         }
 
         /// <summary>
+        /// get information for edit and view
+        /// </summary>
+        public void findDetails()
+        {
+            DataRowView drv = (DataRowView)datagrid.SelectedItem;
+            ID = drv["id"].ToString();
+            ViewTxtName.Text = drv["detail"].ToString();
+            ViewTxtNumServes.Text = drv["num_serves"].ToString();
+            ViewTxtPrepTime.Text = drv["preparation_time"].ToString();
+            ViewTxtMethod.AppendText(drv["method"].ToString());
+            getIngredients();
+        }
+        /// <summary>
         /// view details click
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void View_Click(object sender, RoutedEventArgs e)
         {
+            findDetails();
+            ViewTxtName.IsReadOnly = true;
+            ViewTxtNumServes.IsReadOnly = true;
+            ViewTxtPrepTime.IsReadOnly = true;
+            ViewTxtMethod.IsReadOnly = true;
+            Main.Visibility = Visibility.Hidden;
+            View.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Hidden;
+        }
 
+        /// <summary>
+        /// Get ingredient for recipe
+        /// </summary>
+        public void getIngredients()
+        {
+            try
+             {
+                 //   SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM recipes_ingredents WHERE recipe_id = " + ID + " INNER JOIN ingredients ON recipes_ingredents.ingredent_id = ingredients.ingredient ", conn.getConnectionString());
+                 SqlDataAdapter da = new SqlDataAdapter("SELECT recipes_ingredents.recipe_id, recipes_ingredents.ingredent_id, recipes_ingredents.Amount, ingredients.ingredient,  ingredients.Id FROM recipes_ingredents, ingredients Where  ingredients.Id = recipes_ingredents.ingredent_id AND recipe_id = " + ID, conn.getConnectionString());
+                 DataSet ds = new DataSet();
+          
+                 da.Fill(ds, "recipes_ingredents");
+              
+                 Ingredientslist.ItemsSource = (ds.Tables["recipes_ingredents"].DefaultView);
+             }
+             catch (Exception x)
+             {
+                 MessageBox.Show("error has occured: " + x);
+             }
+
+        }
+
+        /// <summary>
+        /// Close view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseView_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            View.Visibility = Visibility.Hidden;
+        }
+
+
+        /// <summary>
+        /// edit view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditView_Click(object sender, RoutedEventArgs e)
+        {
+            findDetails();
+            Main.Visibility = Visibility.Hidden;
+            View.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Visible;
+            ViewTxtName.IsReadOnly = false;
+            ViewTxtNumServes.IsReadOnly = false;
+            ViewTxtPrepTime.IsReadOnly = false;
+            ViewTxtMethod.IsReadOnly = false;
+        }
+
+        /// <summary>
+        /// edit recipes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+
+        }
+
+
+        /// <summary>
+        /// Delete Ingredient
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteI_Click(object sender, RoutedEventArgs e)
+        {
+       
+        }
+
+        string ConvertRichTextBoxContentsToString(RichTextBox rtb)
+        {
+            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            return textRange.Text;
         }
 
         /// <summary>
@@ -116,7 +219,7 @@ namespace recipesApp
             cnn = new SqlConnection(conn.getConnectionString());
 
 
-            sql = "DELETE recipes WHERE id =" + ID;
+            sql = "DELETE recipes WHERE id =" + ID + ";" + "DELETE recipes_ingredents WHERE recipe_id = " + ID + ";";
 
             try
             {
@@ -131,5 +234,7 @@ namespace recipesApp
             }
             connection();
         }
+
+
     }
 }
