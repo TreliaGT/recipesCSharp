@@ -101,6 +101,9 @@ namespace recipesApp
             addI.Text = drv["ingredient"].ToString();
         }
 
+        /// <summary>
+        /// Allows esit to edit the ingredients 
+        /// </summary>
         public void EditIngredient()
         {
             SqlConnection cnn;
@@ -190,11 +193,19 @@ namespace recipesApp
             ingredentslist.Add(ingredient);
         }
 
+        /// <summary>
+        /// addrecipes button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddRecipes(object sender, RoutedEventArgs e)
         {
             AddRecipesMethod();
         }
 
+        /// <summary>
+        /// Creates the recipe and puts it in the database
+        /// </summary>
         private void AddRecipesMethod()
         {
             SqlConnection cnn;
@@ -221,6 +232,11 @@ namespace recipesApp
             getid();
         }
 
+        /// <summary>
+        /// helps turn rich text box input to string
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <returns></returns>
         string ConvertRichTextBoxContentsToString(RichTextBox rtb)
         {
             TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
@@ -228,6 +244,9 @@ namespace recipesApp
         }
 
         int ids;
+        /// <summary>
+        /// gets the id  of the recipes for the recipe_ingredent table
+        /// </summary>
         public void getid()
         {
             SqlConnection cnn;
@@ -247,6 +266,9 @@ namespace recipesApp
             addToJoinTable();
         }
 
+        /// <summary>
+        /// adds data into the recipes_ingredents table
+        /// </summary>
         public void addToJoinTable()
         {
             SqlConnection cnn;
@@ -259,7 +281,7 @@ namespace recipesApp
                     cnn = new SqlConnection(conn.getConnectionString());
 
 
-                sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values("+ ids + ", " + item + ")";
+                sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(" + ids + ", " + item + ")";
   //            sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(" + id + "," + item + ")";
 
                 try
@@ -276,6 +298,11 @@ namespace recipesApp
                 }
             }
 
+        /// <summary>
+        /// close window button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow r = new MainWindow();
