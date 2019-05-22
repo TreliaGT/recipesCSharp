@@ -2,6 +2,8 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -14,6 +16,7 @@ namespace recipesApp
     public partial class MainWindow : Window
     {
         DBConnection conn = new DBConnection();
+        FavouritesWindow fw = new FavouritesWindow();
         string ID; //get ingredient Id
         public MainWindow()
         {
@@ -90,6 +93,34 @@ namespace recipesApp
         private void AddF_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void saveFavourites()
+        {
+            /*  
+              Employee emp = new Employee(1, "Jane Smith");
+              // write one serialised object to a binary file
+              Stream filestream = File.Open(fw.getFileName(), FileMode.Create);
+              BinaryFormatter bformatter = new BinaryFormatter();
+              bformatter.Serialize(filestream, emp);
+              filestream.Close();
+              Console.WriteLine("Written the employee data tothe file");
+              // read it back
+              emp = null;*/
+        }
+
+        public void getFavourites()
+        {
+            /*  filestream = File.Open(fw.getFileName(), FileMode.Open);
+              bformatter = new BinaryFormatter();
+              emp =
+             (Employee)bformatter.Deserialize(filestream);
+              filestream.Close();
+              Console.WriteLine("Employee Id: {0}",
+             emp.empId.ToString());
+              Console.WriteLine("Employee Name: {0}",
+             emp.empName);
+              Console.ReadLine();*/
         }
 
         /// <summary>

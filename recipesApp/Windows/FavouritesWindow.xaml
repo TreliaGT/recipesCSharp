@@ -7,7 +7,24 @@
         mc:Ignorable="d"
         Title="FavouritesWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="datagrid" HorizontalAlignment="Left" Height="311" Margin="28,81,0,0" VerticalAlignment="Top" Width="727"/>
-
+        <Grid Name="Main">
+            <DataGrid Name="datagrid" HorizontalAlignment="Left" Height="292" Margin="28,81,0,0" VerticalAlignment="Top" Width="727">
+            <DataGridTemplateColumn Header="Delete">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Content="Delete" Click="Delete_Click" CommandParameter="{Binding id}"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="View">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Content="View" Click="View_Click" CommandParameter="{Binding id}"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="680,388,0,0" VerticalAlignment="Top" Width="75" Click="Back_click"/>
+        </Grid>
     </Grid>
 </Window>
