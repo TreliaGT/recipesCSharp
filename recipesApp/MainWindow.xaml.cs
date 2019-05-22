@@ -216,9 +216,26 @@ namespace recipesApp
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-           
+            SqlConnection cnn;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
 
+            cnn = new SqlConnection(conn.getConnectionString());
 
+            string method = ConvertRichTextBoxContentsToString(ViewTxtMethod);
+            sql = "UPDATE recipes SET detail='" + ViewTxtName.Text + "', preparation_time = '" + ViewTxtPrepTime.Text + "' , method = '" +  method + "', num_serves= '" + ViewTxtNumServes.Text + "' WHERE id =" + ID;
+            try
+            {
+                cnn.Open();
+                adapter.InsertCommand = new SqlCommand(sql, cnn);
+                adapter.InsertCommand.ExecuteNonQuery();
+                MessageBox.Show("Row updated !! ");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            connection();
         }
 
         /// <summary>

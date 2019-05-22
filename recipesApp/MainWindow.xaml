@@ -63,7 +63,7 @@
                 </FlowDocument>
             </RichTextBox>
             <Label Content="Name" HorizontalAlignment="Left" Margin="20,48,0,0" VerticalAlignment="Top"/>
-            <Label Content="Prep Time" HorizontalAlignment="Left" Margin="20,84,0,0" VerticalAlignment="Top"/>
+            <Label Content="Prep Time (m)" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top"/>
             <Label Content="Num Of Serve" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
             <Label Content="Method" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.431,3.133"/>
             <DataGrid x:Name="Ingredientslist" x:Uid="datagrid" SelectionMode="Single" Margin="345,53,22,206" ItemsSource="{Binding}" AutoGenerateColumns="False">
@@ -83,7 +83,6 @@
             <Button Content="Close" HorizontalAlignment="Left" Margin="493,370,0,0" VerticalAlignment="Top" Width="75" Click="CloseView_Click"/>
             <Button Content="Edit" HorizontalAlignment="Left" Margin="398,370,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Click" Name="btnEdit"/>
             <Button Content="Add Ingredients" HorizontalAlignment="Left" Margin="409,26,0,0" VerticalAlignment="Top" Width="146"  Click="AddI_Click" Name="btnAddI"/>
-
         </Grid>
     </Grid>
 </Window>
