@@ -20,9 +20,9 @@ namespace recipesApp
         DBConnection conn = new DBConnection();
         FavouritesWindow fw = new FavouritesWindow();
         List<ingredients> ingredients = new List<ingredients>();
-        List<recipes> recipes = new List<recipes>();
+        List<Recipes> recipe = new List<Recipes>();
         string ID; //get ingredient Id
-        private int count;
+      
 
         public MainWindow()
         {
@@ -100,8 +100,8 @@ namespace recipesApp
         private void AddF_Click(object sender, RoutedEventArgs e)
         {
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
-            getDataNewFavourite(drv , drv["id"].ToString());
-
+            getFavourites();
+            getDataNewFavourite(drv, drv["id"].ToString());
         }
 
         /// <summary>
@@ -112,8 +112,9 @@ namespace recipesApp
               // write one serialised object to a binary file
               Stream filestream = File.Open(fw.getFileName(), FileMode.Create);
               BinaryFormatter bformatter = new BinaryFormatter();
-              bformatter.Serialize(filestream, recipes);
+              bformatter.Serialize(filestream, recipe);
               filestream.Close();
+            MessageBox.Show("have been added to favourites");
               // read it back
         }
 
@@ -122,17 +123,12 @@ namespace recipesApp
         /// </summary>
         public void getFavourites()
         {
-            /*  filestream = File.Open(fw.getFileName(), FileMode.Open);
-              bformatter = new BinaryFormatter();
-              emp =
-             (Employee)bformatter.Deserialize(filestream);
-              filestream.Close();
-              Console.WriteLine("Employee Id: {0}",
-             emp.empId.ToString());
-              Console.WriteLine("Employee Name: {0}",
-             emp.empName);
-              Console.ReadLine();*/
+            Stream filestream = File.Open(fw.getFileName(), FileMode.Open);
+            BinaryFormatter bformatter = new BinaryFormatter();
+            recipe = ((List<Recipes>)bformatter.Deserialize(filestream));
+            filestream.Close();
         }
+       
 
         /// <summary>
         /// Adds a favourite to a file
@@ -148,17 +144,14 @@ namespace recipesApp
                 command.Connection = cnn;
                 cnn.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                int i = 0;
-                int j = 1;
+                
                 while (reader.Read())
                 {
-                  
-                  ingredients.Add(new ingredients(reader.GetString(i), reader.GetString(j)));
-                   i =  i + 1;
-                   j = j + 1;
-                } 
+                    ingredients.Add(new ingredients(reader.GetString(0), reader.GetString(1)));
+                }
             };
-            recipes.Add(new recipes(drv["detail"].ToString(),Convert.ToInt32(drv["preparation_time"]), drv["method"].ToString(), Convert.ToInt32(drv["num_serves"].ToString()), ingredients));
+            recipe.Add(new Recipes(drv["detail"].ToString(),Convert.ToInt32(drv["preparation_time"]), drv["method"].ToString(), Convert.ToInt32(drv["num_serves"].ToString()), ingredients));
+           saveFavourites();
         }
 
         /// <summary>
@@ -370,5 +363,9 @@ namespace recipesApp
         }
 
 
+    }
+
+    internal class recipes
+    {
     }
 }

@@ -8,23 +8,28 @@
         Title="FavouritesWindow" Height="450" Width="800">
     <Grid>
         <Grid Name="Main">
-            <DataGrid Name="datagrid" HorizontalAlignment="Left" Height="292" Margin="28,81,0,0" VerticalAlignment="Top" Width="727">
-            <DataGridTemplateColumn Header="Delete">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button Content="Delete" Click="Delete_Click" CommandParameter="{Binding id}"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="View">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button Content="View" Click="View_Click" CommandParameter="{Binding id}"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-        </DataGrid>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="680,388,0,0" VerticalAlignment="Top" Width="75" Click="Back_click"/>
+            <DataGrid x:Name="datagrid" x:Uid="datagrid" SelectionMode="Single" Margin="33,102,373,33" ItemsSource="{Binding recipes}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" x:Name="name" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Prep_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding num_serves}" Header="num of serves" x:Name="num_serve" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Details">
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="View" Click="View_Click" CommandParameter="{Binding id}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="delete">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Content="Delete" Click="Delete_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Back" HorizontalAlignment="Left" Margin="680,388,0,0" VerticalAlignment="Top" Width="75" Click="Back_click"/>
         </Grid>
     </Grid>
 </Window>

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using recipesApp.Classes;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,9 +23,12 @@ namespace recipesApp.Windows
     /// </summary>
     public partial class FavouritesWindow : Window
     {
+        List<Recipes> recipe = new List<Recipes>();
+
         public FavouritesWindow()
         {
             InitializeComponent();
+            getFavourites();
         }
 
         /// <summary>
@@ -38,16 +45,13 @@ namespace recipesApp.Windows
         /// </summary>
         public void saveFavourites()
         {
-            /*  
-              Employee emp = new Employee(1, "Jane Smith");
-              // write one serialised object to a binary file
-              Stream filestream = File.Open(getFileName(), FileMode.Create);
-              BinaryFormatter bformatter = new BinaryFormatter();
-              bformatter.Serialize(filestream, emp);
-              filestream.Close();
-              Console.WriteLine("Written the employee data tothe file");
-          
-              emp = null;*/
+
+            // write one serialised object to a binary file
+            Stream filestream = File.Open(getFileName(), FileMode.Create);
+            BinaryFormatter bformatter = new BinaryFormatter();
+            bformatter.Serialize(filestream, recipe);
+            filestream.Close();
+            // read it back
         }
 
         /// <summary>
@@ -55,16 +59,17 @@ namespace recipesApp.Windows
         /// </summary>
         public void getFavourites()
         {
-            /*  filestream = File.Open(getFileName(), FileMode.Open);
-              bformatter = new BinaryFormatter();
-              emp =(Employee)bformatter.Deserialize(filestream);
-              filestream.Close();
-              Console.WriteLine("Employee Id: {0}",
-             emp.empId.ToString());
-              Console.WriteLine("Employee Name: {0}",
-             emp.empName);
-              Console.ReadLine();*/
+            Stream filestream = File.Open(getFileName(), FileMode.Open);
+            BinaryFormatter bformatter = new BinaryFormatter();
+            recipe = ((List<Recipes>)bformatter.Deserialize(filestream));
+            filestream.Close();
+
+      
+            datagrid.ItemsSource = recipe ;
+         
         }
+
+      
 
         /// <summary>
         /// View details of recipe
@@ -84,7 +89,8 @@ namespace recipesApp.Windows
         /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            
+            int i = datagrid.SelectedIndex;
+            recipe.RemoveAt(i);
         }
 
         private void Back_click(object sender, RoutedEventArgs e)

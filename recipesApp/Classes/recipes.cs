@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace recipesApp.Classes
 {
-    class recipes
+    [Serializable]
+    class Recipes 
     {
         private string Name;
         private int Prep_time;
@@ -14,7 +15,8 @@ namespace recipesApp.Classes
         private int num_serves;
         List<ingredients> list = new List<ingredients>();
 
-        public recipes(string name, int prep_time, string method, int Num_Serves, List<ingredients> List)
+   
+        public Recipes(string name, int prep_time, string method, int Num_Serves, List<ingredients> List)
         {
             this.Name = name;
             this.Prep_time = prep_time;

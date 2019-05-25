@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace recipesApp.Classes
 {
+    [Serializable]
     class ingredients
     {
         private string ingredient;
