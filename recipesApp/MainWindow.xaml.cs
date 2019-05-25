@@ -1,5 +1,7 @@
-﻿using recipesApp.Windows;
+﻿using recipesApp.Classes;
+using recipesApp.Windows;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -17,7 +19,11 @@ namespace recipesApp
     {
         DBConnection conn = new DBConnection();
         FavouritesWindow fw = new FavouritesWindow();
+        List<ingredients> ingredients = new List<ingredients>();
+        List<recipes> recipes = new List<recipes>();
         string ID; //get ingredient Id
+        private int count;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -85,6 +91,7 @@ namespace recipesApp
             this.Close();
         }
 
+       
         /// <summary>
         /// add recipe to favourites
         /// </summary>
@@ -92,23 +99,27 @@ namespace recipesApp
         /// <param name="e"></param>
         private void AddF_Click(object sender, RoutedEventArgs e)
         {
+            DataRowView drv = (DataRowView)datagrid.SelectedItem;
+            getDataNewFavourite(drv , drv["id"].ToString());
 
         }
 
+        /// <summary>
+        /// Save favourites to a file
+        /// </summary>
         public void saveFavourites()
         {
-            /*  
-              Employee emp = new Employee(1, "Jane Smith");
               // write one serialised object to a binary file
               Stream filestream = File.Open(fw.getFileName(), FileMode.Create);
               BinaryFormatter bformatter = new BinaryFormatter();
-              bformatter.Serialize(filestream, emp);
+              bformatter.Serialize(filestream, recipes);
               filestream.Close();
-              Console.WriteLine("Written the employee data tothe file");
               // read it back
-              emp = null;*/
         }
 
+        /// <summary>
+        /// gets favourites from a file
+        /// </summary>
         public void getFavourites()
         {
             /*  filestream = File.Open(fw.getFileName(), FileMode.Open);
@@ -121,6 +132,33 @@ namespace recipesApp
               Console.WriteLine("Employee Name: {0}",
              emp.empName);
               Console.ReadLine();*/
+        }
+
+        /// <summary>
+        /// Adds a favourite to a file
+        /// </summary>
+        /// <param name="id"></param>
+        public void getDataNewFavourite(DataRowView drv, string id)
+        {
+            SqlConnection cnn;
+            cnn = new SqlConnection(conn.getConnectionString());
+            using (SqlCommand command = new SqlCommand("SELECT ingredients.ingredient, recipes_ingredents.Amount FROM recipes_ingredents, ingredients Where  ingredients.Id = recipes_ingredents.ingredent_id AND recipe_id = " + id))
+            {
+
+                command.Connection = cnn;
+                cnn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                int i = 0;
+                int j = 1;
+                while (reader.Read())
+                {
+                  
+                  ingredients.Add(new ingredients(reader.GetString(i), reader.GetString(j)));
+                   i =  i + 1;
+                   j = j + 1;
+                } 
+            };
+            recipes.Add(new recipes(drv["detail"].ToString(),Convert.ToInt32(drv["preparation_time"]), drv["method"].ToString(), Convert.ToInt32(drv["num_serves"].ToString()), ingredients));
         }
 
         /// <summary>

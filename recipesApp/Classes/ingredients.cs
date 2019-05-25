@@ -11,7 +11,7 @@ namespace recipesApp.Classes
         private string ingredient;
         private string amount;
 
-        public void Ingredients(string Ingredient, string Amount)
+        public ingredients(string Ingredient, string Amount)
         {
             this.ingredient = Ingredient;
             this.amount = Amount;

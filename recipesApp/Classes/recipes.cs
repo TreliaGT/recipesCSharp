@@ -14,7 +14,7 @@ namespace recipesApp.Classes
         private int num_serves;
         List<ingredients> list = new List<ingredients>();
 
-        public void Recipes(string name, int prep_time, string method, int Num_Serves, List<ingredients> List)
+        public recipes(string name, int prep_time, string method, int Num_Serves, List<ingredients> List)
         {
             this.Name = name;
             this.Prep_time = prep_time;
