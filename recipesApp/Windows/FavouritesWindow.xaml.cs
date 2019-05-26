@@ -1,6 +1,7 @@
 ﻿using recipesApp.Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace recipesApp.Windows
             BinaryFormatter bformatter = new BinaryFormatter();
             recipe = ((List<Recipes>)bformatter.Deserialize(filestream));
             filestream.Close();
-        
+  
             datagrid.ItemsSource = recipe;
           
           
@@ -128,6 +129,16 @@ namespace recipesApp.Windows
         {
             View.Visibility = Visibility.Hidden;
             Main.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// search function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void search_textchanged(object sender, EventArgs e)
+        {
+           
         }
     }
 }
