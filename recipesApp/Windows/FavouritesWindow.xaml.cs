@@ -127,8 +127,9 @@ namespace recipesApp.Windows
         /// <param name="e"></param>
         private void backViw_click(object sender, RoutedEventArgs e)
         {
-            View.Visibility = Visibility.Hidden;
-            Main.Visibility = Visibility.Visible;
+             View.Visibility = Visibility.Hidden;
+              Main.Visibility = Visibility.Visible;
+           
         }
 
         /// <summary>
@@ -138,7 +139,12 @@ namespace recipesApp.Windows
         /// <param name="e"></param>
         private void search_textchanged(object sender, EventArgs e)
         {
-           
+            string searchitem = search.Text.ToString();
+            var peopleInSeattle = (from item in recipe                                
+                                   where item.name == searchitem
+                                   select item);
+            datagrid.ItemsSource = recipe;
         }
+   
     }
 }
