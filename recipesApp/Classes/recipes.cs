@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace recipesApp.Classes
 {
     [Serializable]
-    class Recipes 
+    class Recipes
     {
         private string Name;
         private int Prep_time;
@@ -15,7 +15,7 @@ namespace recipesApp.Classes
         private int num_serves;
         List<ingredients> list = new List<ingredients>();
 
-   
+
         public Recipes(string name, int prep_time, string method, int Num_Serves, List<ingredients> List)
         {
             this.Name = name;
@@ -25,56 +25,65 @@ namespace recipesApp.Classes
             this.list = List;
         }
 
-
-
         //setters and getters
-        public string getName()
+        public string name
         {
-            return Name;
+            get
+            {
+                return Name;
+            }
+            set
+            {
+                Name = value;
+            }
+        }
+        public int prep_time
+        {
+            get
+            {
+                return Prep_time;
+            }
+            set
+            {
+                Prep_time = value;
+            }
         }
 
-        public void setName(string value)
+        public string method
         {
-            Name = value;
+            get
+            {
+                return Method;
+            }
+            set
+            {
+                Method = value;
+            }
         }
 
-        public int getPrep_time()
+        public int Num_serves
         {
-            return Prep_time;
+            get
+            {
+                return num_serves;
+            }
+            set
+            {
+                num_serves = value;
+            }
         }
 
-        public void setPrep_time(int value)
-        {
-            Prep_time = value;
-        }
-        public string getMethod()
-        {
-            return Method;
-        }
+        public List<ingredients> Ingredients{
+            get
+            {
+                return list;
+            }
+            set
+            {
+                list = value;
+            }
+            }
 
-        public void setMethod(string value)
-        {
-            Name = Method;
-        }
-        public int getnum_serves()
-        {
-            return num_serves;
-        }
-
-        public void setnum_serves(int value)
-        {
-            num_serves = value;
-        }
-
-        public List<ingredients> getingredients()
-        {
-            return list;
-        }
-
-        public void setingredientss(List<ingredients> value)
-        {
-            list = value;
-        }
 
     }
 }

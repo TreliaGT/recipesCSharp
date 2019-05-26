@@ -82,12 +82,12 @@ namespace recipesApp.Windows
             Main.Visibility = Visibility.Hidden;
             int i = datagrid.SelectedIndex;
            
-            Name.Text = recipe[i].getName();
-            Prep_time.Text = "preparation time: " +  recipe[i].getPrep_time().ToString();
-            Num_serves.Text = "Number of Serves: " + recipe[i].getnum_serves().ToString();
-            Method.AppendText(recipe[i].getMethod());
+            Name.Text = recipe[i].name;
+            Prep_time.Text = "preparation time: " +  recipe[i].prep_time.ToString();
+            Num_serves.Text = "Number of Serves: " + recipe[i].Num_serves.ToString();
+            Method.AppendText(recipe[i].method);
             List<ingredients> ingredient = new List<ingredients>();
-            ingredient = recipe[i].getingredients();
+            ingredient = recipe[i].Ingredients;
             for (int j = 0; j < ingredient.Count; j++)
             {
                 ingredients.Items.Add(ingredient[j].getIngredient() + " "  + ingredient[j].getAmount());

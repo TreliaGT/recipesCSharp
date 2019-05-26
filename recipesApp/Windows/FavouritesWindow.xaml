@@ -11,9 +11,9 @@
 
             <DataGrid x:Name="datagrid" x:Uid="datagrid" SelectionMode="Single" Margin="21,89,385,46" ItemsSource="{Binding recipes}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" x:Name="name" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding Prep_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding num_serves}" Header="num of serves" x:Name="num_serve" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding name}" Header="Name" x:Name="name" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding prep_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Num_serves}" Header="num of serves" x:Name="num_serve" IsReadOnly="True" Width="Auto"/>
                     <DataGridTemplateColumn Header="Details">
                         <DataGridTemplateColumn.CellTemplate >
                             <DataTemplate>
