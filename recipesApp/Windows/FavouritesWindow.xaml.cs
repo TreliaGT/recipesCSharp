@@ -140,10 +140,10 @@ namespace recipesApp.Windows
         private void search_textchanged(object sender, EventArgs e)
         {
             string searchitem = search.Text.ToString();
-            var peopleInSeattle = (from item in recipe                                
-                                   where item.name == searchitem
-                                   select item);
-            datagrid.ItemsSource = recipe;
+            var list = from b in recipe
+                       where b.name.ToLower().Contains(searchitem)
+                       select b;
+            datagrid.ItemsSource = list;
         }
    
     }
