@@ -8,7 +8,8 @@
         Title="FavouritesWindow" Height="450" Width="800">
     <Grid>
         <Grid Name="Main">
-            <DataGrid x:Name="datagrid" x:Uid="datagrid" SelectionMode="Single" Margin="33,102,373,33" ItemsSource="{Binding recipes}" AutoGenerateColumns="False">
+
+            <DataGrid x:Name="datagrid" x:Uid="datagrid" SelectionMode="Single" Margin="21,89,385,46" ItemsSource="{Binding recipes}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" x:Name="name" Width="Auto"/>
                     <DataGridTextColumn Binding="{Binding Prep_time}" Header="prep time" x:Name="preparation_time" IsReadOnly="True" Width="Auto"/>
@@ -21,15 +22,31 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="delete">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate>
-                            <Button Content="Delete" Click="Delete_Click"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Delete" Click="Delete_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
             </DataGrid>
             <Button Content="Back" HorizontalAlignment="Left" Margin="680,388,0,0" VerticalAlignment="Top" Width="75" Click="Back_click"/>
+        </Grid>
+        <Grid Name="View" Margin="10,10,0,10">
+            <ListBox x:Name="ingredients" HorizontalAlignment="Left" Height="334" Margin="546,28,0,0" VerticalAlignment="Top" Width="208"/>
+            <Button Content="Close" HorizontalAlignment="Left" Margin="443,367,0,0" VerticalAlignment="Top" Width="178" Click="backViw_click" Height="33"/>
+            <RichTextBox Name="Method" HorizontalAlignment="Left" Height="241" Margin="10,121,0,0" VerticalAlignment="Top" Width="513">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text=""/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <TextBlock  Name="Name" HorizontalAlignment="Left" Margin="28,28,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            </TextBlock>
+            <TextBlock Name="Prep_time" HorizontalAlignment="Left" Margin="28,57,0,0" TextWrapping="Wrap" Text="prep time" VerticalAlignment="Top" RenderTransformOrigin="0.447,0.877"/>
+            <TextBlock Name="Num_serves" HorizontalAlignment="Left" Margin="28,90,0,0" TextWrapping="Wrap" Text="Number of servies" VerticalAlignment="Top"/>
+
         </Grid>
     </Grid>
 </Window>

@@ -24,11 +24,12 @@ namespace recipesApp.Windows
     public partial class FavouritesWindow : Window
     {
         List<Recipes> recipe = new List<Recipes>();
-
+     
         public FavouritesWindow()
         {
             InitializeComponent();
             getFavourites();
+            View.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -53,7 +54,6 @@ namespace recipesApp.Windows
             filestream.Close();
             // read it back
         }
-
         /// <summary>
         /// Get favourites from file
         /// </summary>
@@ -63,13 +63,12 @@ namespace recipesApp.Windows
             BinaryFormatter bformatter = new BinaryFormatter();
             recipe = ((List<Recipes>)bformatter.Deserialize(filestream));
             filestream.Close();
-
-      
-            datagrid.ItemsSource = recipe ;
-         
+        
+            datagrid.ItemsSource = recipe;
+          
+          
         }
-
-      
+  
 
         /// <summary>
         /// View details of recipe
@@ -78,7 +77,20 @@ namespace recipesApp.Windows
         /// <param name="e"></param>
         private void View_Click(object sender, RoutedEventArgs e)
         {
-
+            View.Visibility = Visibility.Visible;
+            Main.Visibility = Visibility.Hidden;
+            int i = datagrid.SelectedIndex;
+           
+            Name.Text = recipe[i].getName();
+            Prep_time.Text = "preparation time: " +  recipe[i].getPrep_time().ToString();
+            Num_serves.Text = "Number of Serves: " + recipe[i].getnum_serves().ToString();
+            Method.AppendText(recipe[i].getMethod());
+            List<ingredients> ingredient = new List<ingredients>();
+            ingredient = recipe[i].getingredients();
+            for (int j = 0; j < ingredient.Count; j++)
+            {
+                ingredients.Items.Add(ingredient[j].getIngredient() + " "  + ingredient[j].getAmount());
+            }
         }
 
 
@@ -93,12 +105,29 @@ namespace recipesApp.Windows
             recipe.RemoveAt(i);
         }
 
+        /// <summary>
+        /// goes back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Back_click(object sender, RoutedEventArgs e)
         {
             saveFavourites();
             MainWindow m = new MainWindow();
             m.Show();
             Close();
+        }
+
+        /// <summary>
+        /// hides the view grid
+        /// and shows the main grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backViw_click(object sender, RoutedEventArgs e)
+        {
+            View.Visibility = Visibility.Hidden;
+            Main.Visibility = Visibility.Visible;
         }
     }
 }

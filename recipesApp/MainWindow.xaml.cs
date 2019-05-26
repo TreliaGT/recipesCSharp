@@ -1,6 +1,7 @@
 ﻿using recipesApp.Classes;
 using recipesApp.Windows;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -22,12 +23,13 @@ namespace recipesApp
         List<ingredients> ingredients = new List<ingredients>();
         List<Recipes> recipe = new List<Recipes>();
         string ID; //get ingredient Id
-      
+        string RecipeId;
 
         public MainWindow()
         {
             InitializeComponent();
             View.Visibility = Visibility.Hidden;
+            addI.Visibility = Visibility.Hidden;
             connection();
         }
         /// <summary>
@@ -161,6 +163,7 @@ namespace recipesApp
         {
             DataRowView drv = (DataRowView)datagrid.SelectedItem;
             ID = drv["id"].ToString();
+            RecipeId = drv["id"].ToString();
             ViewTxtName.Text = drv["detail"].ToString();
             ViewTxtNumServes.Text = drv["num_serves"].ToString();
             ViewTxtPrepTime.Text = drv["preparation_time"].ToString();
@@ -269,18 +272,117 @@ namespace recipesApp
             connection();
         }
 
+
+        //Edit ingredients section
         /// <summary>
         /// add Ingredients
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddI_Click(object sender, RoutedEventArgs e)
+        { 
+            View.Visibility = Visibility.Hidden;
+            addI.Visibility = Visibility.Visible;
+            ingredientsfill();
+        }
+
+        /// <summary>
+        /// fills ingredient table
+        /// </summary>
+        public void ingredientsfill()
         {
+            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM ingredients", conn.getConnectionString());
+            DataSet ds = new DataSet();
+            da.Fill(ds, "ingredients");
+            addIngredient.ItemsSource = ds.Tables["ingredients"].DefaultView;
+        }
+
+        /// <summary>
+        /// allows to search through edit ingredients
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void searchI_textchanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM ingredients WHERE ingredient LIKE '%" + searchI.Text + "%'", conn.getConnectionString());
+                DataSet ds = new DataSet();
+                da.Fill(ds, "ingredents");
+                addIngredient.ItemsSource = ds.Tables["ingredents"].DefaultView;
+            }
+            catch (Exception x)
+            {
+                MessageBox.Show("error has occured: " + x);
+            }
+        }
+
+        ArrayList ingredentslist = new ArrayList();
+        /// <summary>
+        /// Checks ammount 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddIR_Click(object sender, RoutedEventArgs e)
+        {
+            if (EditIAmount.Text == "")
+            {
+                MessageBox.Show("please add an amount in the textbox next to add amount");
+            }
+            else if (EditIAmount.Text == null)
+            {
+                MessageBox.Show("please add an amount in the textbox next to add amount");
+            }
+            else
+            {
+                DataRowView drv = (DataRowView)datagrid.SelectedItem;
+                ID = drv["id"].ToString();
+                string ingredient = ID + ", '" + EditIAmount.Text.ToString() + "'";
+                ingredentslist.Add(ingredient);
+            }
+        }
+
+        private void BacktoView_Click(object sender, RoutedEventArgs e)
+        {
+            View.Visibility = Visibility.Visible;
+            addI.Visibility = Visibility.Hidden;
+            editToJoinTable();
+        }
+
+        /// <summary>
+        /// adds data into the recipes_ingredents table
+        /// </summary>
+        public void editToJoinTable()
+        {
+            SqlConnection cnn;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
 
 
+            foreach (string item in ingredentslist) // Loop through List with foreach
+            {
+                cnn = new SqlConnection(conn.getConnectionString());
+
+
+                sql = "insert into recipes_ingredents (recipe_id, ingredent_id, Amount) values(" + RecipeId + ", " + item + ")";
+
+                try
+                {
+                    cnn.Open();
+                    adapter.InsertCommand = new SqlCommand(sql, cnn);
+                    adapter.InsertCommand.ExecuteNonQuery();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
         }
 
 
+
+        //delete section
         /// <summary>
         /// Delete Ingredient
         /// </summary>
@@ -362,10 +464,6 @@ namespace recipesApp
             connection();
         }
 
-
     }
 
-    internal class recipes
-    {
-    }
 }

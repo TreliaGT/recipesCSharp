@@ -26,6 +26,7 @@ namespace recipesApp.Classes
         }
 
 
+
         //setters and getters
         public string getName()
         {
@@ -63,6 +64,16 @@ namespace recipesApp.Classes
         public void setnum_serves(int value)
         {
             num_serves = value;
+        }
+
+        public List<ingredients> getingredients()
+        {
+            return list;
+        }
+
+        public void setingredientss(List<ingredients> value)
+        {
+            list = value;
         }
 
     }
