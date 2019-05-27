@@ -64,10 +64,11 @@ namespace recipesApp.Windows
             BinaryFormatter bformatter = new BinaryFormatter();
             recipe = ((List<Recipes>)bformatter.Deserialize(filestream));
             filestream.Close();
-  
-            datagrid.ItemsSource = recipe;
-          
-          
+            var list = from b in recipe
+              
+                       orderby b.name
+                       select b;
+            datagrid.ItemsSource = list;
         }
   
 
@@ -142,6 +143,7 @@ namespace recipesApp.Windows
             string searchitem = search.Text.ToString();
             var list = from b in recipe
                        where b.name.ToLower().Contains(searchitem)
+                       orderby b.name
                        select b;
             datagrid.ItemsSource = list;
         }
