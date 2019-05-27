@@ -35,7 +35,7 @@
             <Label Content="Search" HorizontalAlignment="Left" Margin="198,50,0,0" VerticalAlignment="Top"/>
 
         </Grid>
-        <Grid Name="View" Margin="10,10,0,10">
+        <Grid Name="View" Margin="10,10,0,0">
             <ListBox x:Name="ingredients" HorizontalAlignment="Left" Height="334" Margin="546,28,0,0" VerticalAlignment="Top" Width="208"/>
             <Button Content="Close" HorizontalAlignment="Left" Margin="443,367,0,0" VerticalAlignment="Top" Width="178" Click="backViw_click" Height="33"/>
             <RichTextBox Name="Method" HorizontalAlignment="Left" Height="241" Margin="10,121,0,0" VerticalAlignment="Top" Width="513">
